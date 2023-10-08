@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iCodeThis.com daily challenge</title>
+    <link rel="stylesheet" href="styles.css" class="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;1,200;1,300&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-200">
+        <div class="relative overflow-hidden slider">
+            
+            <div class="slider-container w-full h-[400px] flex transition-all duration-500 ease-in">
+                <div class="min-w-full bg-blue-300 slide">
+                    <h1 class="p-4 text-3xl text-white">Slide 1</h1>
+                </div>
+                <div class="min-w-full bg-green-300 slide">
+                    <h1 class="p-4 text-3xl text-white">Slide 2</h1>
+                </div>
+                <div class="min-w-full bg-red-300 slide">
+                    <h1 class="p-4 text-3xl text-white">Slide 3</h1>
+                </div>
+            </div>
+
+            <button id="prevBtn" class="absolute left-0 px-4 py-2 font-semibold text-white -translate-y-1/2 bg-blue-500 top-1/2 hover:bg-blue-700 rounded-r-md">
+                Prev
+            </button>
+            <button id="nextBtn" class="absolute right-0 px-4 py-2 font-semibold text-white translate-y-1/2 bg-blue-500 top-1/2 hover:bg-blue-700 rounded-l-md">
+                Next
+            </button>
+        </div>
+        <div class="flex justify-center mt-4">
+            <span class="dot">
+                <svg xmlns="http://www.w3.org/2000/svg" class="cursor-pointer" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#89d8f4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M12 7a5 5 0 1 1 -4.995 5.217l-.005 -.217l.005 -.217a5 5 0 0 1 4.995 -4.783z" stroke-width="0" fill="currentColor" />
+                </svg>
+            </span>
+            <span class="dot">
+                <svg xmlns="http://www.w3.org/2000/svg" class="cursor-pointer" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#89d8f4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M12 7a5 5 0 1 1 -4.995 5.217l-.005 -.217l.005 -.217a5 5 0 0 1 4.995 -4.783z" stroke-width="0" fill="currentColor" />
+                </svg>
+            </span>
+            <span class="dot">
+                <svg xmlns="http://www.w3.org/2000/svg" class="cursor-pointer" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#89d8f4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M12 7a5 5 0 1 1 -4.995 5.217l-.005 -.217l.005 -.217a5 5 0 0 1 4.995 -4.783z" stroke-width="0" fill="currentColor" />
+                </svg>
+            </span>
+        </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const sliderContainer = document.querySelector('.slider-container');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const dots = document.querySelectorAll('.dot');
+        let currentIndex = 0;
+
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            updateSlider(-1);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % slides.length;
+            updateSlider(1);
+        });
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                const direction = index > currentIndex ? 1 : -1;
+                currentIndex = index;
+                updateSlider(direction);
+            });
+        });
+
+        function updateSlider(direction) {
+            sliderContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+            slides.forEach((slide, index) => {
+                if (index === currentIndex) {
+                    slide.classList.add('opacity-100');
+                    slide.classList.remove('transform-translate-right', 'transform-translate-left');
+                } else if (index === (currentIndex + direction + slides.length) % slides.length) {
+                    slide.classList.add('opacity-100');
+                    slide.classList.add(direction === 1 ? 'transform-translate-right' : 'transform-translate-left');
+                } else {
+                    slide.classList.remove('opacity-100');
+                }
+            });
+
+            dots.forEach((dot, index) => {
+                if (index === currentIndex) 
+                    dot.classList.add('[&>svg>path:nth-child(2)]:fill-slate-300');
+                else
+                    dot.classList.remove('[&>svg>path:nth-child(2)]:fill-slate-300');
+            });
+        }
+
+        updateSlider(1);
+    </script>
+</body>
+</html>
