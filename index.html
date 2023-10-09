@@ -14,7 +14,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body class="h-screen bg-gray-200">
-    <div class="relative h-full overflow-hidden slider">
+    <div class="relative max-w-5xl m-auto overflow-hidden -translate-y-1/2 shadow-[0px_0px_32px_9px_rgba(35,35,35,0.35)] top-1/2 h-2/4 slider">
         <div class="flex w-full h-full transition-all duration-500 ease-in slider-container">
             <div class="min-w-full bg-blue-300 slide">
                     <img src="https://images.unsplash.com/photo-1539768942893-daf53e448371?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2671&q=80" class="object-cover w-full h-full">
@@ -94,12 +94,11 @@
         });
 
         function updateSlider(direction) {
-            let dots = document.querySelectorAll('.dot');
+            const dots = document.querySelectorAll('.dot');
             
             sliderContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
             slides.forEach((slide, index) => {
                 if (index === currentIndex) {
-                    slide.classList.add('opacity-100');
                     slide.classList.remove('transform-translate-right', 'transform-translate-left');
                 } else if (index === (currentIndex + direction + slides.length) % slides.length) {
                     slide.classList.add('opacity-100');
@@ -107,6 +106,7 @@
                 } else {
                     slide.classList.remove('opacity-100');
                 }
+                
             });
 
             dots.forEach((dot, index) => {
@@ -119,6 +119,7 @@
                     dot.classList.add('bg-black');
                 }
             });
+            
         }
         createDots();
         startAutoSlide();
